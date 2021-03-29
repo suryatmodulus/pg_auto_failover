@@ -171,6 +171,8 @@ typedef struct ReplicationSource
 	char backupDir[MAXCONNINFO];
 	char applicationName[MAXCONNINFO];
 	char targetLSN[PG_LSN_MAXLENGTH];
+	char targetAction[NAMEDATALEN];
+	char targetTimeline[NAMEDATALEN];
 	SSLOptions sslOptions;
 } ReplicationSource;
 
