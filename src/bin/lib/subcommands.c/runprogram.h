@@ -628,7 +628,21 @@ snprintf_program_command_line(Program *prog, char *buffer, int size)
 
 	for (index = 0; prog->args[index] != NULL; index++)
 	{
-		int n = snprintf(currentPtr, remainingBytes, " %s", prog->args[index]);
+		int n;
+
+		/* replace an empty char buffer with '' */
+		if (prog->args[index][0] == '\0')
+		{
+			n = snprintf(currentPtr, remainingBytes, " ''");
+		}
+		else if (strchr(prog->args[index], ' ') != NULL)
+		{
+			n = snprintf(currentPtr, remainingBytes, " '%s'", prog->args[index]);
+		}
+		else
+		{
+			n = snprintf(currentPtr, remainingBytes, " %s", prog->args[index]);
+		}
 
 		if (n >= remainingBytes)
 		{
