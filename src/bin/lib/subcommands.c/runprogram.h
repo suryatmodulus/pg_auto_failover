@@ -635,7 +635,10 @@ snprintf_program_command_line(Program *prog, char *buffer, int size)
 		{
 			n = snprintf(currentPtr, remainingBytes, " ''");
 		}
-		else if (strchr(prog->args[index], ' ') != NULL)
+		/* single-quote are needed when argument contains special chars */
+		else if (strchr(prog->args[index], ' ') != NULL ||
+				 strchr(prog->args[index], '?') != NULL ||
+				 strchr(prog->args[index], '!') != NULL)
 		{
 			n = snprintf(currentPtr, remainingBytes, " '%s'", prog->args[index]);
 		}
